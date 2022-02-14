@@ -11,12 +11,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import springfox.documentation.annotations.ApiIgnore;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 @SpringBootApplication
+@EnableSwagger2
 @RestController
 public class FakewsApplication {
 
@@ -24,12 +29,14 @@ public class FakewsApplication {
 		SpringApplication.run(FakewsApplication.class, args);
 	}
 
-	@GetMapping("/hello")
-	public String hello() {
+	@ApiIgnore
+	@GetMapping("/")
+	public String home() {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy ' ' HH:mm:ss");
 		Date date = new Date(System.currentTimeMillis());
 
-		return String.format("Olá CGM!!!! <br><br>" + formatter.format(date));
+		return String.format("Olá CGM!!!! <br><br>" + 
+		                     "Para acessar a documentação da API REST, clique <a href='/swagger-ui.html'>aqui</a>.<br><br>" + formatter.format(date));
 	}
 
 	@GetMapping(value = "/download-punidos", produces = "text/csv")
